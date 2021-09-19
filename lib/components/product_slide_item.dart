@@ -11,7 +11,7 @@ class ProductSlideItem extends StatelessWidget {
   final String description;
   final String discount;
   final String price;
-  final double? stars;
+  final String stars;
 
   ProductSlideItem({
     required this.image,
@@ -19,7 +19,7 @@ class ProductSlideItem extends StatelessWidget {
     this.description = '',
     this.discount = '',
     this.price = '',
-    this.stars,
+    this.stars = '0.0',
   });
 
   final double radius = 12.0;
@@ -166,8 +166,9 @@ class ProductSlideItem extends StatelessWidget {
                 ),
               ),
             ),
-            (stars != null
-                ? Row(
+           // (stars != null
+                //?
+      Row(
                     children: [
                       Icon(
                         Icons.star_rounded,
@@ -185,7 +186,8 @@ class ProductSlideItem extends StatelessWidget {
                       ),
                     ],
                   )
-                : Divider()),
+                //:
+        //Divider()),
           ],
         ),
       ),

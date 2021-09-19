@@ -26,10 +26,7 @@ class BottomBar extends StatelessWidget {
             topLeft: Radius.circular(30),
           ),
           boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(.2),
-                spreadRadius: 0,
-                blurRadius: 10),
+            BoxShadow(color: Colors.black.withOpacity(.2), spreadRadius: 0, blurRadius: 10),
           ],
         ),
         child: ClipRRect(
@@ -41,18 +38,17 @@ class BottomBar extends StatelessWidget {
             backgroundColor: Colors.white,
             currentIndex: currentIndex,
             onTap: (e) {
-              if (e == 0) {
+              if (e == 0 && currentIndex != 0) {
                 go(context, HomePage.routeName);
               }
-              if (e == 1) {
-                go(context, FavoritePageWidget.routeName,
-                    arguments: RouteArguments(title: 'Favorite Items'));
+              if (e == 1 && currentIndex != 1) {
+                go(context, FavoritePageWidget.routeName, arguments: RouteArguments(title: 'Favorite Items'));
               }
-              if (e == 2) {
+              if (e == 2 && currentIndex != 2) {
                 go(context, ShoppingCartWidget.routeName);
                 //cartCount++;
               }
-              if (e == 3) {
+              if (e == 3 && currentIndex != 3) {
                 go(context, UserProfilePage.routeName);
               }
             },

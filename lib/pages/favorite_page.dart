@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ui/config/app_theme.dart';
 import 'package:shop_ui/components/favorite_items.dart';
 import 'package:shop_ui/config/route_arguments.dart';
+import 'package:shop_ui/models/favorite_item.dart';
 import 'package:shop_ui/widgets/bottom_app_bar.dart';
 
 class FavoritePageWidget extends StatefulWidget {
@@ -26,7 +27,7 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF4DAC51),
+        backgroundColor: AppTheme.primaryColor,
         automaticallyImplyLeading: true,
         title: Text(
           _args.title ?? 'Favorite Items',
@@ -58,45 +59,7 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: FavoriteItemWidget(
-                    onTap: () {},
-                    image: 'https://i.imgur.com/gE1umz8.png',
-                    title: 'Pizza Margherita',
-                    infoText: 'Made with San Marzano tomatoes',
-                    price: '25 USD'),
-              ),
-              FavoriteItemWidget(
-                  onTap: () {},
-                  title: 'Salmon Tartar',
-                  image: 'https://i.imgur.com/sdI9ati.jpg',
-                  infoText:  'Salmon Tartar skinless salmon',
-                  price: '50 USD'),
-              FavoriteItemWidget(
-                  onTap: () {},
-                  image: 'https://i.imgur.com/Nen335I.jpg',
-                  title: 'Pizza Peperoni',
-                  infoText: 'Pizza with peperoni',
-                  price: '18 USD'),
-              FavoriteItemWidget(
-                  onTap: () {},
-                  image: 'https://i.imgur.com/Hvek7Qe.jpg',
-                  title: 'Salad',
-                  infoText: 'Salad with vegetables',
-                  price: '26 USD'),
-              FavoriteItemWidget(
-                  onTap: () {},
-                  image: 'https://i.imgur.com/pEaCNxO.jpg',
-                  title: 'Sushi',
-                  infoText: 'Sushi philadelphia with salmon',
-                  price: '25 USD'),
-              FavoriteItemWidget(
-                  onTap: () {},
-                  image: 'https://i.imgur.com/Z9iqCEu.jpg',
-                  title: 'Sile',
-                  infoText: 'Sile with vegetables',
-                  price: '26 USD'),
+              ...favoriteItem.map((e) => FavoriteItemWidget(onTap: () {}, image: e.image, title: e.title, infoText: e.infoText, price: e.price)),
             ],
           ),
         ),

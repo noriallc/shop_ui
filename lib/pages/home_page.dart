@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shop_ui/components/categorys_widget.dart';
 import 'package:shop_ui/components/product_slide_item.dart';
 import 'package:shop_ui/config/app_theme.dart';
-import 'package:shop_ui/pages/user_profile_page.dart';
+import 'package:shop_ui/models/product_slide_item.dart';
 import 'package:shop_ui/widgets/bottom_app_bar.dart';
 import 'package:shop_ui/widgets/app_widgets.dart';
-import 'package:shop_ui/pages/shopping_cart_page.dart';
-import 'package:shop_ui/pages/favorite_page.dart';
-import '../route.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -42,51 +39,55 @@ class _HomePageState extends State<HomePage> {
         leading: _menuButton(),
         title: _searchBar(),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              topPadding.height,
-              Container(
-                padding: EdgeInsets.only(
-                  left: 0,
-                  right: 0,
-                  top: 15,
-                  bottom: 15,
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      5.width,
-                      CategoriesWidget(
-                        icon: Icons.restaurant,
-                        text: 'Restaurants',
-                      ),
-                      CategoriesWidget(
-                        icon: Icons.coffee,
-                        text: 'Coffee Shops',
-                      ),
-                      CategoriesWidget(
-                        icon: Icons.shopping_basket,
-                        text: 'Supermarkets',
-                      ),
-                      5.width,
-                    ],
-                  ),
+      body: _categories(topPadding),
+      bottomNavigationBar: BottomBar(currentIndex: 0, cartCount: 0),
+    );
+  }
+
+  Widget _categories(double topPadding){
+    return  Container(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            topPadding.height,
+            Container(
+              padding: EdgeInsets.only(
+                left: 0,
+                right: 0,
+                top: 15,
+                bottom: 15,
+              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    5.width,
+                    CategoriesWidget(
+                      icon: Icons.restaurant,
+                      text: 'Restaurants',
+                    ),
+                    CategoriesWidget(
+                      icon: Icons.coffee,
+                      text: 'Coffee Shops',
+                    ),
+                    CategoriesWidget(
+                      icon: Icons.shopping_basket,
+                      text: 'Supermarkets',
+                    ),
+                    5.width,
+                  ],
                 ),
               ),
-              _scrollItems(title: 'Special Offers'),
-              _scrollItems(title: 'Popular Food'),
-              _scrollItems(title: 'For You'),
-            ],
-          ),
+            ),
+            _scrollItems(title: 'Special Offers'),
+            _scrollItems(title: 'Popular Food'),
+            _scrollItems(title: 'For You'),
+          ],
         ),
       ),
-      bottomNavigationBar: BottomBar(currentIndex: 0, cartCount: 0),
     );
   }
 
@@ -199,10 +200,10 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Poppins',
-                    color: Color(0xFF4FB453),
+                    color: AppTheme.primaryColor,
                   ),
                   borderSide: BorderSide(
-                    color: Color(0xFF46A74A),
+                    color: AppTheme.primaryColor,
                     width: 1,
                   ),
                   borderRadius: 40,
@@ -217,40 +218,14 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              ProductSlideItem(
-                discount: "-12%",
-                title: 'Pizza Margherita',
-                description: 'Made with San Marzano tomatoes',
-                price: '15 USD',
-                stars: 1.5,
-                image:
-                    'https://i.imgur.com/37lZ1VO.jpg',
-              ),
-              ProductSlideItem(
-                title: 'Sushi',
-                description: 'Sushi philadelphia ',
-                price: '8 USD',
-                stars: 5.0,
-                image:
-                    'https://i.imgur.com/pEaCNxO.jpg',
-              ),
-              ProductSlideItem(
-                discount: "-25%",
-                title: 'Cezar Salad',
-                description: 'Add on Aged Cheddar Cheese ',
-                price: '22 USD',
-                stars: 2.4,
-                image:
-                'https://i.imgur.com/Hvek7Qe.jpg',
-
-              ),
-              ProductSlideItem(
-                title: 'Salmon Tartar',
-                description: 'Salmon Tartar skinless salmon',
-                price: '12 USD',
-                stars: 3.2,
-                image:
-                'https://i.imgur.com/sdI9ati.jpg',
+              ...productItem.map((e) => ProductSlideItem(
+                    discount: e.discount == "0%" ? "" : e.discount,
+                    title: e.title,
+                    description: e.description,
+                    price: e.price,
+                    stars: e.stars,
+                    image: e.image,
+                  )
               ),
             ],
           ),

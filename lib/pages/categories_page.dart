@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ui/components/category_list_item.dart';
 import 'package:shop_ui/config/app_theme.dart';
 import 'package:shop_ui/config/route_arguments.dart';
+import 'package:shop_ui/models/category_item.dart';
 import 'package:shop_ui/pages/restaurants_menu_page.dart';
 import 'package:shop_ui/widgets/bottom_app_bar.dart';
 import 'package:shop_ui/widgets/app_widgets.dart';
@@ -23,8 +24,6 @@ class CategoriesPageState extends State<CategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as RouteArguments;
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -36,76 +35,42 @@ class CategoriesPageState extends State<CategoriesPage> {
         title: _searchBar(),
       ),
       bottomNavigationBar: BottomBar(currentIndex: 0, cartCount: 0),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(
-                  top: 15,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  args.title.toString(),
-                  style: AppTheme.title1,
-                ),
+      body: _categoriesList(),
+    );
+  }
+
+  Widget _categoriesList(){
+    final args = ModalRoute.of(context)!.settings.arguments as RouteArguments;
+    return Container(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                top: 15,
               ),
-              CategoryListItem(
-                title: 'CINTRONELLE',
-                rating: "4.2",
-                infoText: 'French cuisine   40-50 member    15-20 USD',
-                image: 'https://i.imgur.com/Nd4cs3a.jpg',
-                onTap: () {
-                  go(context, RestaurantsMenuPage.routeName,
-                      arguments: RouteArguments(
-                          title: 'CINTRONELLE',
-                          message:
-                              'French cuisine   40-50 member    15-20 USD'));
-                },
+              alignment: Alignment.center,
+              child: Text(
+                args.title.toString(),
+                style: AppTheme.title1,
               ),
-              CategoryListItem(
-                rating: "4.2",
-                title: 'VERO VERO',
-                infoText: 'Italian cuisine    40-60 member    10-15 USD',
-                image: 'https://i.imgur.com/3ZsaaZj.jpg',
-                onTap: () {
-                  go(context, RestaurantsMenuPage.routeName,
-                      arguments: RouteArguments(
-                          title: 'VERO VERO',
-                          message: 'Armenia    40-60 member    10-15 USD'));
-                },
-              ),
-              CategoryListItem(
-                title: 'MILK BAR',
-                rating: "4.9",
-                infoText: 'European cuisine    40-60 member    10-25 USD',
-                image: 'https://i.imgur.com/HCZDeIw.jpg',
-                onTap: () {
-                  go(context, RestaurantsMenuPage.routeName,
-                      arguments: RouteArguments(
-                          title:  'MILK BAR',
-                          message: 'European cuisine    40-60 member    10-25 USD'));
-                },
-              ),
-              CategoryListItem(
-                title: 'DVIN MUSIC HALL',
-                rating: "5.0",
-                infoText: 'Armenia    40-50 member    10-15 USD',
-                image: 'https://i.imgur.com/tlvSazi.jpg',
-                onTap: () {
-                  go(context, RestaurantsMenuPage.routeName,
-                      arguments: RouteArguments(
-                          title: 'DVIN MUSIC HALL',
-                          message: 'Armenia    40-50 member    10-15 USD'));
-                },
-              ),
-            ],
-          ),
+            ),
+            ...categoryItem.map((e) => CategoryListItem(
+              title: e.title,
+              rating: e.rating,
+              infoText: e.infoText,
+              image: e.image,
+              onTap: () {
+                go(context, RestaurantsMenuPage.routeName,
+                    arguments: RouteArguments(
+                        title: e.title, message: e.infoText));
+              },
+            )),
+          ],
         ),
       ),
     );
   }
-
   Widget _searchBar() {
     return Container(
       child: Stack(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ui/components/list_tile.dart';
 import 'package:shop_ui/config/app_theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shop_ui/models/list_tile.dart';
 import 'package:shop_ui/route.dart';
 import 'package:shop_ui/widgets/bottom_app_bar.dart';
 
@@ -32,110 +33,106 @@ class UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppTheme.tertiaryColor,
-      body: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.min,
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
+              Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 320,
-                    // decoration: BoxDecoration(
-                    //   color: Color(0xFF4B39EF),
-                    // ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Row(
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 320,
+                        child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Expanded(
-                              child: Stack(children: [
-                                _topAvatar(),
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 120, 0, 0),
-                                    child: Container(
-                                      width: 150,
-                                      height: 150,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: CircleAvatar(
-                                        foregroundImage: NetworkImage(
-                                          'https://i.imgur.com/M0xax1O.png',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Stack(children: [
+                                    _topAvatar(),
+                                    _userPhoto(),
+                                  ]),
                                 ),
-                              ]),
+                              ],
                             ),
+                            _userName(),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Name Surname',
-                                style: AppTheme.title3.override(
-                                  fontFamily: 'Poppins',
-                                  color: Colors.black87,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),
+              _list(),
             ],
           ),
-          Padding(
-            // top: 350,
-            padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 10),
-            //alignment: Alignment.bottomCenter,
-            child: Container(
-              // height:
-              //     MediaQuery.of(context).size.height * 0.55,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      children: [
-                          ListTileWidget(title: "My orders", onTap: () {  },topRadius: 10,),
-                          ListTileWidget(title: "My payment cards", onTap: () {  },),
-                          ListTileWidget(title: "My addresses", onTap: () {  },),
-                          ListTileWidget(title: "Promocodes", onTap: () {  },),
-                          ListTileWidget(title: "Share promocodes", onTap: () {  },),
-                          ListTileWidget(title: "FAQ", onTap: () {  },),
-                          ListTileWidget(title: "Exit", onTap: () {  },bottomRadius: 10,),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
       bottomNavigationBar: BottomBar(currentIndex: 3, cartCount: 0),
+    );
+  }
+
+  Widget _userPhoto() {
+    return Align(
+      alignment: AlignmentDirectional(0, 0),
+      child: Padding(
+        padding: EdgeInsets.only(top: 120),
+        child: Container(
+          width: 150,
+          height: 150,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+          ),
+          child: CircleAvatar(
+            foregroundImage: NetworkImage(
+              'https://i.imgur.com/M0xax1O.png',
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _userName() {
+    return Padding(
+      padding: EdgeInsets.only(top: 8),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Name Surname',
+            style: AppTheme.title3.override(
+              fontFamily: 'Poppins',
+              color: Colors.black87,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _list() {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          ...listTile.map((e) => ListTileWidget(
+                title: e.title,
+                onTap: () {},
+                topRadius: 5,
+                bottomRadius: 5,
+              )),
+        ],
+      ),
     );
   }
 
@@ -156,7 +153,7 @@ class UserProfilePageState extends State<UserProfilePage> {
               topRight: Radius.circular(0),
             ),
             child: Image.network(
-              "https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/green-leaves-texture-tropical-leaf-background-banner-top-view-yuliia-chyzhevska.jpg",
+              "https://i.imgur.com/FRaruxF.jpg",
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,

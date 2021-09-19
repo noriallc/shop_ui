@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:shop_ui/components/category_list_item.dart';
 import 'package:shop_ui/config/app_theme.dart';
 import 'package:shop_ui/config/route_arguments.dart';
-import 'package:shop_ui/pages/categories_page.dart';
-import 'package:shop_ui/pages/favorite_page.dart';
+import 'package:shop_ui/models/restaurants_menu.dart';
 import 'package:shop_ui/widgets/app_widgets.dart';
 import 'package:shop_ui/widgets/bottom_app_bar.dart';
-
 import '../route.dart';
 
 class RestaurantsMenuPage extends StatefulWidget {
@@ -40,33 +38,12 @@ class _RestaurantsMenuPageState extends State<RestaurantsMenuPage> {
                 ),
                 alignment: Alignment.center,
               ),
-              CategoryListItem(
-                title: 'Salads',
+              ...restaurantsMenuPage.map((e) => CategoryListItem(
+                title: e.title,
                 centerTitle: true,
-                image:
-                    'https://i.imgur.com/Hvek7Qe.jpg',
+                image: e.image,
                 onTap: () {},
-              ),
-              CategoryListItem(
-                title: 'Fish',
-                centerTitle: true,
-                image:
-                    'https://i.imgur.com/tDFB2xg.jpg',
-                onTap: () {},
-              ),
-              CategoryListItem(
-                title: 'Sides',
-                centerTitle: true,
-                image:
-                    'https://i.imgur.com/Z9iqCEu.jpg',
-                onTap: () {},
-              ),
-              CategoryListItem(
-                title: 'Pizzas',
-                centerTitle: true,
-                image:
-                    'https://i.imgur.com/8kXkJ6A.jpg',
-                onTap: () {},
+              )
               ),
             ],
           ),
@@ -98,8 +75,7 @@ class _RestaurantsMenuPageState extends State<RestaurantsMenuPage> {
               children: [
                 AppButtonWidget(
                   onPressed: () {
-                    go(context, CategoriesPage.routeName,
-                        arguments: RouteArguments(title: "Restaurants"));
+                    goBack(context);
                   },
                   text: '',
                   icon: Icon(
@@ -172,11 +148,6 @@ class _RestaurantsMenuPageState extends State<RestaurantsMenuPage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Icon(
-                        //   Icons.brightness_1_rounded,
-                        //   color: AppTheme.tertiaryColor,
-                        //   size: 8,
-                        // ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                           child: Text(

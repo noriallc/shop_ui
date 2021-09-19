@@ -39,55 +39,10 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
       ),
       body: Container(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Column(
-              //mainAxisSize: MainAxisSize.max,
-              children: [
-                for (int i = 0; i < 20; i++)
-                  Padding(
-                    padding:
-                        EdgeInsets.only(left: 10, right: 10, top: 1, bottom: 1),
-                    child: CartItemWidget(
-                      onTap: () {},
-                      topRadius: ((i == 0) ? 10 : 0),
-                      bottomRadius: ((i == 19) ? 10 : 0),
-                      title: 'Sushi',
-                      infoText: 'Dragon garden',
-                      price: '10 USD',
-                    ),
-                  ),
-              ],
-            ),
-          ),
+            child: _cartList(20),
         ),
       ),
       bottomNavigationBar: _buildBottomAppBar(context),
-    );
-  }
-
-  Widget _buildBottomAppBar(BuildContext context) {
-    return Container(
-      height: 300,
-      margin: EdgeInsets.only(top: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            child: _priceInfo(),
-            //10.height,
-          ),
-          Container(
-            child: _buttons(),
-          ),
-          Expanded(
-            child: Align(
-              alignment: AlignmentDirectional(0, 1),
-              child: BottomBar(currentIndex: 2, cartCount: 0),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -151,7 +106,7 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
     return Container(
       child: Column(children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          padding: EdgeInsets.all(10),
           child: AppButtonWidget(
             onPressed: () {
               print('Button pressed ...');
@@ -160,7 +115,7 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
             options: AppButtonOptions(
               width: double.infinity,
               height: 50,
-              color: Color(0xFF4CB350),
+              color: AppTheme.primaryColor,
               textStyle: AppTheme.subtitle2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -174,7 +129,7 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 30),
+          padding: EdgeInsets.all(10),
           child: AppButtonWidget(
             onPressed: () {
               print('Button pressed ...');
@@ -186,7 +141,7 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
               color: Color(0xFFD1D4D6),
               textStyle: AppTheme.subtitle2.override(
                 fontFamily: 'Poppins',
-                color: Color(0xFF4CB350),
+                color: AppTheme.primaryColor,
               ),
               borderSide: BorderSide(
                 color: Colors.transparent,
@@ -197,6 +152,53 @@ class _ShoppingCartWidgetState extends State<ShoppingCartWidget> {
           ),
         )
       ]),
+    );
+  }
+
+  Widget _cartList(int count){
+    return Padding(
+      padding: EdgeInsets.only(top: 20),
+      child: Column(
+        children: [
+          for (int i = 0; i < count; i++)
+            Padding(
+              padding:
+              EdgeInsets.only(left: 10, right: 10, top: 1, bottom: 1),
+              child: CartItemWidget(
+                onTap: () {},
+                topRadius: ((i == 0) ? 10 : 0),
+                bottomRadius: ((i == count-1) ? 10 : 0),
+                title: 'Sushi',
+                infoText: 'Dragon garden',
+                price: '10 USD',
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomAppBar(BuildContext context) {
+    return Container(
+      height: 300,
+      margin: EdgeInsets.only(top: 20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            child: _priceInfo(),
+          ),
+          Container(
+            child: _buttons(),
+          ),
+          Expanded(
+            child: Align(
+              alignment: AlignmentDirectional(0, 1),
+              child: BottomBar(currentIndex: 2, cartCount: 0),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

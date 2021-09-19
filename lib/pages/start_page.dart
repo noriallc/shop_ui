@@ -22,7 +22,7 @@ class _StartPageState extends State<StartPage> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 3), (){
-      go(context, LoginPage.routeName);
+      goReplace(context, LoginPage.routeName);
     });
   }
 

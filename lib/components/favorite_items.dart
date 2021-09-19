@@ -24,11 +24,10 @@ class FavoriteItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(image);
     return Padding(
       padding: EdgeInsets.only(right: 10, left: 10, top: 5, bottom: 5),
       child: Container(
-        width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         decoration: BoxDecoration(
           color: AppTheme.secondaryColor,
           borderRadius: BorderRadius.circular(10),
@@ -36,38 +35,37 @@ class FavoriteItemWidget extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _image(),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _image(),
+              ],
+            ),
             Expanded(
-              child: Container(
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _title(),
-                      _infoText(),
-                      _price(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            _counter(),
-                            _addToCart(),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _title(),
+                    _infoText(),
+                    _price(),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5, bottom: 5),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          _counter(),
+                          _addToCart(),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -78,7 +76,7 @@ class FavoriteItemWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         child: Image.network(
           image,
           width: 100,
@@ -88,112 +86,130 @@ class FavoriteItemWidget extends StatelessWidget {
       ),
     );
   }
-  Widget _counter() {
-    return Positioned(
-      child: Container(
-        child: Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(right: 5),
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Align(
-                  alignment: Alignment(0, 0),
-                  child: FaIcon(
-                    FontAwesomeIcons.minus,
-                    color: AppTheme.primaryColor,
-                    size: 14,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 5, top: 5),
-              child: Text(
-                '1',
-                style: AppTheme.bodyText1.override(
-                  fontFamily: 'Poppins',
-                  color: Color(0xFF789A8C),
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 5),
-              child: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Align(
-                  alignment: Alignment(0, 0),
-                  child: FaIcon(
-                    FontAwesomeIcons.plus,
-                    color: AppTheme.primaryColor,
-                    size: 14,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-  Widget _title() {
-    return Padding(
-      padding: EdgeInsets.only(top: 1, bottom: 1),
-      child: Text(
-        title,
-        textAlign: TextAlign.start,
-        style: AppTheme.bodyText1.override(
-          fontFamily: 'Poppins',
-          color: AppTheme.primaryColor,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
+
   Widget _infoText() {
     return Padding(
       padding: EdgeInsets.only(top: 1, bottom: 1),
-      child: Text(
-        infoText,
-        style: AppTheme.bodyText1.override(
-          fontFamily: 'Poppins',
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            infoText,
+            style: AppTheme.bodyText1.override(
+              color: Color(0xFF8B97A2),
+              fontFamily: 'Lexend Deca',
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+            ),
+          )
+        ],
       ),
     );
   }
+
+  Widget _title() {
+    return Padding(
+      padding: EdgeInsets.only(top: 1, bottom: 1),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            title,
+            style: AppTheme.bodyText1.override(
+              fontFamily: 'Poppins',
+              color: AppTheme.primaryColor,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _price() {
     return Padding(
       padding: EdgeInsets.only(top: 1, bottom: 1),
-      child: Text(
-        price,
-        textAlign: TextAlign.start,
-        style: AppTheme.bodyText1.override(
-          fontFamily: 'Poppins',
-          color: AppTheme.darkBGColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            price,
+            textAlign: TextAlign.start,
+            style: AppTheme.bodyText1.override(
+              fontFamily: 'Poppins',
+              color: AppTheme.darkBGColor,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }
-  Widget _addToCart(){
-    return  Expanded(
+
+  Widget _counter() {
+    return Row(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Align(
+              alignment: Alignment(0, 0),
+              child: FaIcon(
+                FontAwesomeIcons.minus,
+                color: AppTheme.primaryColor,
+                size: 14,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 5, top: 5),
+          child: Text(
+            '1',
+            style: AppTheme.bodyText1.override(
+              fontFamily: 'Poppins',
+              color: Color(0xFF789A8C),
+              fontSize: 20,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 5),
+          child: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Align(
+              alignment: Alignment(0, 0),
+              child: FaIcon(
+                FontAwesomeIcons.plus,
+                color: AppTheme.primaryColor,
+                size: 14,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _addToCart() {
+    return Expanded(
       child: Align(
-        alignment: Alignment(0, 0),
+        alignment: AlignmentDirectional(1, 0),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+          padding: EdgeInsets.only(left: 10, right: 10),
           child: AppButtonWidget(
             onPressed: () {
               print('Button pressed ...');
@@ -203,8 +219,7 @@ class FavoriteItemWidget extends StatelessWidget {
               width: 120,
               height: 30,
               color: AppTheme.primaryColor,
-              textStyle:
-              AppTheme.subtitle2.override(
+              textStyle: AppTheme.subtitle2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
               ),
